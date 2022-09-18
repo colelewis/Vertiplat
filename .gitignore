@@ -72,4 +72,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignore GIMP files. Only push the assets used by Unity.
-**/*.xcf
+**/*.xcf*
+
+# Ignore .vscode directory and all silly settings there.
+**/.vscode/*

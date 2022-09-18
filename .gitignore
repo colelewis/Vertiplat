@@ -76,3 +76,6 @@ crashlytics-build.properties
 
 # Ignore .vscode directory and all silly settings there.
 **/.vscode/*
+
+# Ignore my scribble notes.
+**/adams_links.txt

@@ -34,6 +34,7 @@ public class CharacterController : MonoBehaviour
     private bool JumpDebounce = true;
     private Vector2 prevVel = new Vector2(0,0);
     private float LastJumpClock = 0;
+    private bool touchingSurface;
 
 
     void CreateDust() //creates dust particles at players feet
@@ -156,10 +157,17 @@ public class CharacterController : MonoBehaviour
 
     }
 
-    private void OnGroundTouch() //for both collision enter and collision stay
+    private void OnCollisionTouch(Collision2D collision) //for both collision enter and collision stay
     {
         
-        
+        touchingSurface = true;
+        //raycast to see if player is on ground
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
+        if(hit.collider != null)
+        {
+            float distance = Mathf.Abs(transform.position.y - hit.point.y);
+            Debug.Log(distance);
+        }
         if(rb.velocity.y <= 0 && !OnGround) //landed
         {
             OnGround = true;
@@ -169,6 +177,7 @@ public class CharacterController : MonoBehaviour
             }
             CreateDust();
         }
+
 
         if(JumpDebounce) //if allowed to jump then reset time
                 {
@@ -181,7 +190,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnGroundTouch();
+        OnCollisionTouch(collision);
 
     }
 
@@ -189,7 +198,12 @@ public class CharacterController : MonoBehaviour
     {
        if(!OnGround || CurrentJumpHoldTime!=JumpHoldTime)
         {
-            OnGroundTouch();
+            OnCollisionTouch(collision);
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        touchingSurface = false;
     }
 }

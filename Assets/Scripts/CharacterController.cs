@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     /*
-     * this script was tuned for a gravity scale of 5, continuous collisiton detection inside rigidbody 2D
+     * this script was tuned for a gravity scale of 5, and continuous collisiton detection inside rigidbody 2D
      * 
      * 
      */

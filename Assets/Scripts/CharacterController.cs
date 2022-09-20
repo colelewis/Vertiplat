@@ -38,10 +38,17 @@ public class CharacterController : MonoBehaviour
 
     void CreateDust() //creates dust particles at players feet
     {
-        GameObject dust = Instantiate(DustParticleSystem.gameObject, new Vector3(transform.position.x, transform.position.y - 0.5f, -1f), Quaternion.identity);
-        ParticleSystem PS = dust.GetComponent<ParticleSystem>();
-        PS.Play();
-        Destroy(dust, PS.main.duration + 1f);
+        try
+        {
+            GameObject dust = Instantiate(DustParticleSystem.gameObject, new Vector3(transform.position.x, transform.position.y - 0.5f, -1f), Quaternion.identity);
+            ParticleSystem PS = dust.GetComponent<ParticleSystem>();
+            PS.Play();
+            Destroy(dust, PS.main.duration + 1f);
+        }
+        catch
+        {
+            Debug.Log("Dust reference missing");
+        }
     }
 
     // Start is called before the first frame update

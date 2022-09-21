@@ -215,13 +215,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71bf7116cbb0b1b468185116a18e3b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1575756757}
-  RiseSpeed: 0
+  RiseSpeed: 1
   CatchUpLeeway: 3
   ZAxis: -10
 --- !u!1 &688523419
@@ -5208,14 +5208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa453f642c9894d209ea36af1935dbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 4
-  yPlayerDeviation: 8
-  randomXDeviationUpperBound: 0
-  randomXDeviationLowerBound: 0
-  randomYDeviationUpperBound: 0
-  randomYDeviationLowerBound: 0
-  platformSpawnYThreshold: 0.6
+  randomXDeviationUpperBound: 0.7
+  randomXDeviationLowerBound: -0.7
+  randomYDeviationUpperBound: 0.08
+  randomYDeviationLowerBound: 0.07
+  platformSpawnYThreshold: 0.08
   platform: {fileID: 9153910225221652390, guid: cc7e37085863c4166b2c7b61b0111ea7, type: 3}
+  pooledPlatforms: []
+  poolLimit: 25
   player: {fileID: 1575756757}
   randomSeed: 99
 --- !u!4 &1206346952

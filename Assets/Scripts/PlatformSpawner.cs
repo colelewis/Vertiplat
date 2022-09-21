@@ -50,7 +50,6 @@ public class PlatformSpawner : MonoBehaviour
         foreach (GameObject p in pooledPlatforms) {
             Vector3 platformInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(p.transform.position);
             if (platformInCameraPosition.y < 0f) { // destroy platform if it leaves camera
-                // Destroy(p);
                 p.SetActive(false);
             }
         }
@@ -67,17 +66,21 @@ public class PlatformSpawner : MonoBehaviour
             float randomYDeviation = Random.Range(randomYDeviationLowerBound, randomYDeviationUpperBound); // to be tuned
 
             location.x = Mathf.Clamp((playerInCameraPosition.x + randomXDeviation), -1, 1);
-            location.y = Mathf.Clamp((playerInCameraPosition.y + randomYDeviation), (playerInCameraPosition.y + platform.GetComponent<BoxCollider2D>().bounds.size.y), (playerInCameraPosition.y + randomYDeviationUpperBound));
+            // location.y = Mathf.Clamp((playerInCameraPosition.y + randomYDeviation), (playerInCameraPosition.y + platform.GetComponent<BoxCollider2D>().bounds.size.y), (playerInCameraPosition.y + randomYDeviationUpperBound));
+            location.y = (playerInCameraPosition.y - 0.01f) + randomYDeviation;
 
             location = UnityEngine.Camera.main.ViewportToWorldPoint(location); // convert back to world space
 
             if (playerInCameraPosition.y >= platformSpawnYThreshold) { // spawn threshold 
-                // GameObject spawnedPlatform = Instantiate(platform, location, Quaternion.identity);
-
                 GameObject newPlatform = GetPooledPlatform();
                 if (newPlatform != null) {
                     newPlatform.transform.position = location;
                     newPlatform.SetActive(true);
+
+                    Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, 2f, 3); // PlatformLayer is layer 3
+                    if (platformOverlaps.Length > 0) {
+                        newPlatform.SetActive(false);
+                    }
                 }
                 
                 // Debug.Log(spawnedPlatform.transform.position);

@@ -76,11 +76,11 @@ public class PlatformSpawner : MonoBehaviour
                 if (newPlatform != null) {
                     newPlatform.transform.position = location;
                     newPlatform.SetActive(true);
+                }
 
-                    Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, 2f, 3); // PlatformLayer is layer 3
+                Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, 3.5f, 3); // PlatformLayer is layer 3
                     if (platformOverlaps.Length > 0) {
                         newPlatform.SetActive(false);
-                    }
                 }
                 
                 // Debug.Log(spawnedPlatform.transform.position);

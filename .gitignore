@@ -71,6 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+## END of Unity specific modifiers. ##
 # Ignore GIMP files. Only push the assets used by Unity.
 **/*.xcf*
 
@@ -79,3 +80,7 @@ crashlytics-build.properties
 
 # Ignore my scribble notes.
 **/adams_links.txt
+
+# DS_Store from macOS
+.DS_Store
+*/.DS_Store

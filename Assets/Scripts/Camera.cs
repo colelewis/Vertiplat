@@ -7,7 +7,7 @@ public class Camera : MonoBehaviour
 
     public GameObject Player; //player object
     public float RiseSpeed = 1.0f; //speed at which the camera will go up automatically
-    public float CatchUpLeeway = 1.0f; //how far up relative to the camera the player is allowed to get before the it catches up to them
+    public float CatchUpLeeway = 1.0f; //how far up relative to the camera the player is allowed to get before it catches up to them
     public int ZAxis = -10; //sets z axis of camera
 
     // Update is called once per frame

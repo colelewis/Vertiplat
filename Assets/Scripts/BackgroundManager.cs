@@ -19,7 +19,7 @@ public class BackgroundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        renderer.material.mainTextureOffset = new Vector2(0f, Time.time * scrollSpeed);
+        renderer.material.mainTextureOffset += new Vector2(0f, Time.deltaTime * scrollSpeed);
         transform.position = new Vector3(UnityEngine.Camera.main.transform.position.x, UnityEngine.Camera.main.transform.position.y, 1);
     }
 }

@@ -22,8 +22,8 @@ public class CharacterController : MonoBehaviour
     public float ShrinkTransitionTime = 0.1f; //how long it takes for the player to shrink while fast falling
     public float JumpTimingForgiveness = 0.1f; //how soon a player can hit jump before landing that will still count when landing
    // public float WallJumpPower = 6f; //overall jump power
-   // public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
-    public float WallJumpTime = 0.2f;
+    public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
+    //public float WallJumpTime = 0.2f;
 
     private bool FastFalling = false;
     private bool Jumping = false;
@@ -40,9 +40,6 @@ public class CharacterController : MonoBehaviour
     private float LastJumpClock = 0;
     private bool RightHolding;
     private bool LeftHolding;
-    private bool WallJumpingRight;
-    private bool WallJumpingLeft;
-    private float CountWallJumpTime = 0;
     private bool AwayWallJump = false;
     private GameObject PrevWallJump;
     private GameObject CurrWall;
@@ -85,51 +82,30 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         HorInput = Input.GetAxisRaw("Horizontal");
-        //Debug.Log(HorMovement);
+
         VertInput = Input.GetAxisRaw("Vertical");
 
         if (VertInput == 1) //pressing up
         {
             if(RightHolding && JumpDebounce)
             {
-
-                //rb.AddForce(-Vector3.right * WallJumpPower);
-                if (HorInput == -1 && PrevWallJump != CurrWall)
+                if (HorInput == -1) //&& PrevWallJump != CurrWall)
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x + 0.5f, transform.position.y, -1f));
                 }
-                /*else if(HorInput == 0)
-                {
-                    CurrentJumpHoldTime = JumpHoldTime / 16;
-                    InternalJumpPower = JumpPower * 0.3f;
-                    InternalWallJumpPower = WallJumpPower * 0.2f;
-                    Debug.Log("neutral jump");
-                }
-                else
-                {
-                    InternalWallJumpPower = WallJumpPower * 2;
-                }*/
+                
                 
             }
             else if(LeftHolding && JumpDebounce)
             {
-                //rb.AddForce(Vector3.right * WallJumpPower);
-                if (HorInput == 1 && PrevWallJump != CurrWall)
+
+                if (HorInput == 1) //&& PrevWallJump != CurrWall)
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x - 0.5f, transform.position.y, -1f));
                 }
-                /*else if (HorInput == 0)
-                {
-                    CurrentJumpHoldTime = JumpHoldTime / 4;
-                    InternalWallJumpPower = WallJumpPower * 0.7f;
-                    Debug.Log("neutral jump");
-                }
-                else
-                {
-                    InternalWallJumpPower = WallJumpPower * 2;
-                }*/
+
                 
             }
             else if(CurrentJumpHoldTime > 0) //can still go up
@@ -208,24 +184,7 @@ public class CharacterController : MonoBehaviour
         }
         prevVel = rb.velocity;
 
-        /*if(WallJumpingRight || WallJumpingLeft)
-        {
-            CountWallJumpTime += Time.deltaTime;
-            if(CountWallJumpTime >= WallJumpTime)
-            {
-                WallJumpingLeft = false;
-                WallJumpingRight = false;
-                CountWallJumpTime = 0;
-            }
-           /*if(WallJumpingRight && HorInput == 1)
-            {
-                HorInput = 0;
-            }else if(WallJumpingLeft && HorInput == -1)
-            {
-                HorInput = 0;
-            }
-            
-        }*/
+        
         if(AwayWallJump && rb.velocity.y < -4 )
         {
             AwayWallJump = false;
@@ -237,46 +196,18 @@ public class CharacterController : MonoBehaviour
     {
         //deltaTime not needed (im pretty sure)
 
-
+        //if(OnGround)
+        //{
         rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
-        //if (WallJumpingRight) rb.velocity += new Vector2(-1f, 0f) * WallJumpPower;
-        //if (WallJumpingLeft) rb.velocity += new Vector2(1f, 0f) * WallJumpPower;
+        /*}
+        else
+        {
+            rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
+            if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
+        }*/
         if (Jumping) rb.velocity = new Vector2(rb.velocity.x, InternalJumpPower);
         if (FastFalling) rb.velocity += new Vector2(0, -FastFallRate);
 
-        /*if (OnGround)
-        {
-            rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
-        }
-        else
-        {
-            if(HorInput != 0)
-            {
-                HorVel += HorInput * MoveSpeed * AirResistance;
-                if (HorVel > MoveSpeed || HorVel < -MoveSpeed) HorVel = HorInput * MoveSpeed;
-            }
-            else if (HorVel > HorInput * MoveSpeed)
-            {
-
-                HorVel -= MoveSpeed * AirResistance;
-                if (HorVel < 0 && HorInput == 0)
-                {
-                    HorVel = 0;
-                }
-                if (HorVel > MoveSpeed || HorVel < -MoveSpeed) HorVel = HorInput * MoveSpeed;
-            }
-            else if (HorVel < HorInput * MoveSpeed)
-            {
-                HorVel += MoveSpeed * AirResistance;
-                if (HorVel > 0 && HorInput == 0)
-                {
-                    HorVel = 0;
-                }
-                if (HorVel > MoveSpeed || HorVel < -MoveSpeed) HorVel = HorInput * MoveSpeed;
-            }
-        }*/
-
-        //rb.velocity = new Vector2(rb.velocity.x + HorVel, rb.velocity.y);
 
     }
 
@@ -286,7 +217,8 @@ public class CharacterController : MonoBehaviour
         //check if platform?
         Vector3 normal = collision.contacts[0].normal;
         float angle = Vector3.Angle(normal, Vector3.up);
-        InternalJumpPower = JumpPower;
+        if(!RightHolding && !LeftHolding)
+            InternalJumpPower = JumpPower;
         if(Mathf.Approximately(angle, 0) && !OnGround && rb.velocity.y <= 0)
         {
             //Debug.Log("Ground");
@@ -307,33 +239,15 @@ public class CharacterController : MonoBehaviour
             if(cross.y>0)
             {
                 //on left wall
-                //Debug.Log("on left wall");
                 LeftHolding = true;
             }
             else
             {
                 //on right wall
-                //Debug.Log("on right wall");
                 RightHolding = true;
                 
             }
         }
-
-        /*if(rb.velocity.y <= 0 && !OnGround) //landed
-        {
-            OnGround = true;
-            if(LastJumpClock<=JumpTimingForgiveness)
-            {
-                JumpDebounce = true;
-            }
-            CreateDust();
-        }*/
-
-
-        /*if(JumpDebounce) //if allowed to jump then reset time
-            {
-                CurrentJumpHoldTime = JumpHoldTime;
-            }*/
 
         sprite.transform.localScale = new Vector3(NormalXScale, sprite.transform.localScale.y, sprite.transform.localScale.z); //fix scale if player was fastfalling
         ShrinkTransition = 0f;

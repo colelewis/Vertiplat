@@ -46,6 +46,8 @@ public class CharacterController : MonoBehaviour
     private GameObject PrevWallJump;
     private GameObject CurrWall;
     private float LastOnGround = 0;
+    private float playerSizeY;
+    private float playerSizeX;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -79,6 +81,8 @@ public class CharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         CurrentJumpHoldTime = JumpHoldTime;
         NormalXScale = sprite.transform.localScale.x;
+        playerSizeX = GetComponent<Collider2D>().bounds.size.x;
+        playerSizeY = GetComponent<Collider2D>().bounds.size.y;
     }
 
     // Update is called once per frame
@@ -105,7 +109,7 @@ public class CharacterController : MonoBehaviour
                 if (HorInput == -1) //&& PrevWallJump != CurrWall)
                 {
                     JumpAway();
-                    CreateDust(new Vector3(transform.position.x + 0.5f, transform.position.y, -1f));
+                    CreateDust(new Vector3(transform.position.x + playerSizeX/2, transform.position.y, -1f));
                 }
                 
                 
@@ -116,7 +120,7 @@ public class CharacterController : MonoBehaviour
                 if (HorInput == 1) //&& PrevWallJump != CurrWall)
                 {
                     JumpAway();
-                    CreateDust(new Vector3(transform.position.x - 0.5f, transform.position.y, -1f));
+                    CreateDust(new Vector3(transform.position.x - playerSizeX/2, transform.position.y, -1f));
                 }
 
                 
@@ -128,7 +132,7 @@ public class CharacterController : MonoBehaviour
                 if(OnGround && JumpDebounce || LastOnGround<=CoyoteTime && JumpDebounce) //if this is the first frame of the jump
                 {
                     rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump
-                    CreateDust(new Vector3(transform.position.x, transform.position.y - 0.5f, -1f));
+                    CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY/2, -1f));
                     OnGround = false;
                     JumpDebounce = false;
                 }
@@ -247,7 +251,7 @@ public class CharacterController : MonoBehaviour
                 JumpDebounce = true;
                 CurrentJumpHoldTime = JumpHoldTime;
             }
-            CreateDust(new Vector3(transform.position.x, transform.position.y - 0.5f, -1f));
+            CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY/2, -1f));
         }
         else if(Mathf.Approximately(angle, 90))
         {
@@ -259,7 +263,7 @@ public class CharacterController : MonoBehaviour
                 LeftHolding = true;
                 if(rb.velocity.y<0)
                 {
-                    CreateDust(new Vector3(transform.position.x - 0.5f, transform.position.y, -1f));
+                    CreateDust(new Vector3(transform.position.x - playerSizeX/2, transform.position.y - playerSizeY/2, -1f));
                 }
             }
             else
@@ -268,7 +272,7 @@ public class CharacterController : MonoBehaviour
                 RightHolding = true;
                 if(rb.velocity.y<0)
                 {
-                    CreateDust(new Vector3(transform.position.x + 0.5f, transform.position.y, -1f));
+                    CreateDust(new Vector3(transform.position.x + playerSizeX/2, transform.position.y - playerSizeY/2, -1f));
                 }
                 
             }

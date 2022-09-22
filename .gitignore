@@ -84,3 +84,7 @@ crashlytics-build.properties
 # DS_Store from macOS
 .DS_Store
 */.DS_Store
+
+# Meta files are not needed for palettes, as they aren't used in game
+**/Assets/Paletts/**
+

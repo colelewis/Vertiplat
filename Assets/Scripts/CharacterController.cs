@@ -240,11 +240,19 @@ public class CharacterController : MonoBehaviour
             {
                 //on left wall
                 LeftHolding = true;
+                if(rb.velocity.y<0)
+                {
+                    CreateDust(new Vector3(transform.position.x - 0.5f, transform.position.y, -1f));
+                }
             }
             else
             {
                 //on right wall
                 RightHolding = true;
+                if(rb.velocity.y<0)
+                {
+                    CreateDust(new Vector3(transform.position.x + 0.5f, transform.position.y, -1f));
+                }
                 
             }
         }

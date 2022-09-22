@@ -85,6 +85,7 @@ crashlytics-build.properties
 .DS_Store
 */.DS_Store
 
-# Meta files are not needed for palettes, as they aren't used in game
-**/Assets/Paletts/**
+# Meta files are not needed for paletts, as they aren't used in game
+**/Assets/Palettes/*.meta
+**/Assets/Palettes.meta
 

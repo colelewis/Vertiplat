@@ -10,7 +10,8 @@ public class CharacterController : MonoBehaviour
      * 
      */
 
-
+    //add wall stick
+    //more feedback? squash + stretch, different particles, etc.
 
     public GameObject DustParticleSystem; //dust particle system
     public GameObject sprite; //player sprite
@@ -21,8 +22,8 @@ public class CharacterController : MonoBehaviour
     public float FallShrinkFactor = 0.05f; //how much the player shrinks while fast falling
     public float ShrinkTransitionTime = 0.1f; //how long it takes for the player to shrink while fast falling
     public float JumpBufferingTime = 0.1f; //how soon a player can hit jump before landing that will still count when landing
-   // public float WallJumpPower = 6f; //overall jump power
-    //public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
+    //public float WallJumpPower = 6f; //overall jump power
+    public float AirResistance = 0.15f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
     //public float WallJumpTime = 0.2f;
     public float CoyoteTime = 0.1f; //time that the player still has to jump after walking off a platform
 
@@ -45,6 +46,7 @@ public class CharacterController : MonoBehaviour
     private GameObject PrevWallJump;
     private GameObject CurrWall;
     private float LastOnGround = 0;
+    private float HorVel;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -84,8 +86,12 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         HorInput = Input.GetAxisRaw("Horizontal");
-
         VertInput = Input.GetAxisRaw("Vertical");
+        var Jump = Input.GetAxisRaw("Jump");
+        if(Jump==1)
+        {
+            VertInput = 1;
+        }
 
         if (VertInput == 1) //pressing up
         {
@@ -205,15 +211,28 @@ public class CharacterController : MonoBehaviour
     {
         //deltaTime not needed (im pretty sure)
 
-        //if(OnGround)
-        //{
-        rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
-        /*}
+        /*if(OnGround)
+        {
+            rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
+        }
         else
         {
             rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
             if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
         }*/
+
+        if (OnGround)
+        {
+            rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
+            if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
+            if(HorInput == 0) rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+
+
         if (Jumping) rb.velocity = new Vector2(rb.velocity.x, InternalJumpPower);
         if (FastFalling) rb.velocity += new Vector2(0, -FastFallRate);
 

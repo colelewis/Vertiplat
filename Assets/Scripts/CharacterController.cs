@@ -22,8 +22,9 @@ public class CharacterController : MonoBehaviour
     public float ShrinkTransitionTime = 0.1f; //how long it takes for the player to shrink while fast falling
     public float JumpTimingForgiveness = 0.1f; //how soon a player can hit jump before landing that will still count when landing
    // public float WallJumpPower = 6f; //overall jump power
-    public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
+    //public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
     //public float WallJumpTime = 0.2f;
+    public float CoyoteTime = 0.1f; //time that the player still has to jump after walking off a platform
 
     private bool FastFalling = false;
     private bool Jumping = false;
@@ -43,6 +44,7 @@ public class CharacterController : MonoBehaviour
     private bool AwayWallJump = false;
     private GameObject PrevWallJump;
     private GameObject CurrWall;
+    private float LastOnGround = 0;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -87,6 +89,12 @@ public class CharacterController : MonoBehaviour
 
         if (VertInput == 1) //pressing up
         {
+            
+            //not being on the ground and not jumping clears the jump hold time, so reset it if its still within coyote time and the player tries to jump
+            if(LastOnGround<=CoyoteTime && !Jumping && JumpDebounce) 
+            {
+                CurrentJumpHoldTime=JumpHoldTime;
+            }
             if(RightHolding && JumpDebounce)
             {
                 if (HorInput == -1) //&& PrevWallJump != CurrWall)
@@ -112,7 +120,7 @@ public class CharacterController : MonoBehaviour
             {
                 Jumping = true;
                 CurrentJumpHoldTime -= Time.deltaTime; //subtract from time remaining
-                if(OnGround && JumpDebounce) //if this is the first frame of the jump
+                if(OnGround && JumpDebounce || LastOnGround<=CoyoteTime && JumpDebounce) //if this is the first frame of the jump
                 {
                     rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump
                     CreateDust(new Vector3(transform.position.x, transform.position.y - 0.5f, -1f));
@@ -176,6 +184,7 @@ public class CharacterController : MonoBehaviour
         if(!OnGround) //time the jump
         {
             LastJumpClock += Time.deltaTime;
+            LastOnGround += Time.deltaTime;
         }
 
         if(rb.velocity.y == 0 && prevVel.y!= 0 && Mathf.Abs(rb.velocity.x-prevVel.x)>5.0f) //detect if landing reset X velocity
@@ -223,6 +232,7 @@ public class CharacterController : MonoBehaviour
         {
             //Debug.Log("Ground");
             OnGround = true;
+            LastOnGround = 0;
             PrevWallJump = null;
             CurrWall = null;
             if (LastJumpClock <= JumpTimingForgiveness)

@@ -20,7 +20,7 @@ public class CharacterController : MonoBehaviour
     public float FastFallRate = 2f; //how fast the player falls when holding down while falling
     public float FallShrinkFactor = 0.05f; //how much the player shrinks while fast falling
     public float ShrinkTransitionTime = 0.1f; //how long it takes for the player to shrink while fast falling
-    public float JumpTimingForgiveness = 0.1f; //how soon a player can hit jump before landing that will still count when landing
+    public float JumpBufferingTime = 0.1f; //how soon a player can hit jump before landing that will still count when landing
    // public float WallJumpPower = 6f; //overall jump power
     //public float AirResistance = 0.2f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
     //public float WallJumpTime = 0.2f;
@@ -235,7 +235,7 @@ public class CharacterController : MonoBehaviour
             LastOnGround = 0;
             PrevWallJump = null;
             CurrWall = null;
-            if (LastJumpClock <= JumpTimingForgiveness)
+            if (LastJumpClock <= JumpBufferingTime)
             {
                 JumpDebounce = true;
                 CurrentJumpHoldTime = JumpHoldTime;

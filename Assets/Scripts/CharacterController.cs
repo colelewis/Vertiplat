@@ -46,7 +46,6 @@ public class CharacterController : MonoBehaviour
     private GameObject PrevWallJump;
     private GameObject CurrWall;
     private float LastOnGround = 0;
-    private float HorVel;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -211,17 +210,7 @@ public class CharacterController : MonoBehaviour
     {
         //deltaTime not needed (im pretty sure)
 
-        /*if(OnGround)
-        {
-            rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
-            if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
-        }*/
-
-        if (OnGround)
+        if(OnGround)
         {
             rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
         }
@@ -231,7 +220,6 @@ public class CharacterController : MonoBehaviour
             if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
             if(HorInput == 0) rb.velocity = new Vector2(0, rb.velocity.y);
         }
-
 
         if (Jumping) rb.velocity = new Vector2(rb.velocity.x, InternalJumpPower);
         if (FastFalling) rb.velocity += new Vector2(0, -FastFallRate);

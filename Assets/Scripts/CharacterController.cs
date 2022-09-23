@@ -10,7 +10,7 @@ public class CharacterController : MonoBehaviour
      * 
      */
 
-    //add wall stick
+
     //more feedback? squash + stretch, different particles, etc.
 
     public GameObject DustParticleSystem; //dust particle system
@@ -26,7 +26,7 @@ public class CharacterController : MonoBehaviour
     public float AirResistance = 0.15f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
     //public float WallJumpTime = 0.2f;
     public float CoyoteTime = 0.1f; //time that the player still has to jump after walking off a platform
-    public float WallStickTime = 0.067f;
+    public float WallStickTime = 0.067f; //how long the player sticks to a wall after moving away from it. this is to help pull off a more consistent wall jump. current time is 4 frames (assuming 60fps)
 
     private bool FastFalling = false;
     private bool Jumping = false;
@@ -70,8 +70,6 @@ public class CharacterController : MonoBehaviour
     {
         CurrentJumpHoldTime = JumpHoldTime / 8;
         InternalJumpPower = JumpPower * 1.5f;
-        //AwayWallJump = true;
-        //WallJumpingRight = true;
         JumpDebounce = false;
     }
 
@@ -106,7 +104,7 @@ public class CharacterController : MonoBehaviour
             }
             if(RightHolding && JumpDebounce)
             {
-                if (HorInput == -1) //&& PrevWallJump != CurrWall)
+                if (HorInput == -1)
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x + playerSizeX/2, transform.position.y, -1f));
@@ -117,7 +115,7 @@ public class CharacterController : MonoBehaviour
             else if(LeftHolding && JumpDebounce)
             {
 
-                if (HorInput == 1) //&& PrevWallJump != CurrWall)
+                if (HorInput == 1)
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x - playerSizeX/2, transform.position.y, -1f));
@@ -249,7 +247,6 @@ public class CharacterController : MonoBehaviour
     private void OnCollisionTouch(Collision2D collision) //for both collision enter and collision stay
     {
         
-        //check if platform?
         Vector3 normal = collision.contacts[0].normal;
         float angle = Vector3.Angle(normal, Vector3.up);
         if(WallStickDebounce)

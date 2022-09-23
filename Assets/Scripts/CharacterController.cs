@@ -18,7 +18,7 @@ public class CharacterController : MonoBehaviour
     public float MoveSpeed = 8f; //speed of player moving left and right
     public float JumpPower = 14f; //how high the player can jump
     public float JumpHoldTime = 0.2f; //how long the player can hold jump to continue to ascend upwards
-    public float FastFallRate = 2f; //how fast the player falls when holding down while falling
+    public float FastFallRate = 1.5f; //how fast the player falls when holding down while falling
     public float FallShrinkFactor = 0.05f; //how much the player shrinks while fast falling
     public float ShrinkTransitionTime = 0.1f; //how long it takes for the player to shrink while fast falling
     public float JumpBufferingTime = 0.1f; //how soon a player can hit jump before landing that will still count when landing
@@ -26,6 +26,7 @@ public class CharacterController : MonoBehaviour
     public float AirResistance = 0.15f; //slows the players control when in the air. MoveSpeed * AirResistance is movement calculation in the air
     //public float WallJumpTime = 0.2f;
     public float CoyoteTime = 0.1f; //time that the player still has to jump after walking off a platform
+    public float WallStickTime = 0.067f;
 
     private bool FastFalling = false;
     private bool Jumping = false;
@@ -43,11 +44,11 @@ public class CharacterController : MonoBehaviour
     private bool RightHolding;
     private bool LeftHolding;
     private bool AwayWallJump = false;
-    private GameObject PrevWallJump;
-    private GameObject CurrWall;
     private float LastOnGround = 0;
     private float playerSizeY;
     private float playerSizeX;
+    private float WallStickTimer;
+    private bool WallStickDebounce;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -67,7 +68,6 @@ public class CharacterController : MonoBehaviour
 
     void JumpAway()
     {
-        PrevWallJump = CurrWall;
         CurrentJumpHoldTime = JumpHoldTime / 8;
         InternalJumpPower = JumpPower * 1.5f;
         //AwayWallJump = true;
@@ -98,7 +98,7 @@ public class CharacterController : MonoBehaviour
 
         if (VertInput == 1) //pressing up
         {
-            
+            WallStickTimer = 0;
             //not being on the ground and not jumping clears the jump hold time, so reset it if its still within coyote time and the player tries to jump
             if(LastOnGround<=CoyoteTime && !Jumping && JumpDebounce) 
             {
@@ -207,6 +207,21 @@ public class CharacterController : MonoBehaviour
         {
             AwayWallJump = false;
         }
+        
+        //this has to be last
+        if(HorInput==-1 && RightHolding || HorInput==1 && LeftHolding)
+        {
+            WallStickDebounce = false;
+            if(WallStickTimer>0)
+            {
+                HorInput = 0;
+            }
+        }
+
+        if(WallStickTimer>0 && !WallStickDebounce)
+        {
+            WallStickTimer -= Time.deltaTime;
+        }
 
     }
 
@@ -237,6 +252,8 @@ public class CharacterController : MonoBehaviour
         //check if platform?
         Vector3 normal = collision.contacts[0].normal;
         float angle = Vector3.Angle(normal, Vector3.up);
+        if(WallStickDebounce)
+            WallStickTimer = WallStickTime;
         if(!RightHolding && !LeftHolding)
             InternalJumpPower = JumpPower;
         if(Mathf.Approximately(angle, 0) && !OnGround && rb.velocity.y <= 0)
@@ -244,8 +261,6 @@ public class CharacterController : MonoBehaviour
             //Debug.Log("Ground");
             OnGround = true;
             LastOnGround = 0;
-            PrevWallJump = null;
-            CurrWall = null;
             if (LastJumpClock <= JumpBufferingTime)
             {
                 JumpDebounce = true;
@@ -255,7 +270,6 @@ public class CharacterController : MonoBehaviour
         }
         else if(Mathf.Approximately(angle, 90))
         {
-            CurrWall = collision.gameObject;
             Vector3 cross = Vector3.Cross(Vector3.forward, normal);
             if(cross.y>0)
             {
@@ -301,5 +315,6 @@ public class CharacterController : MonoBehaviour
         RightHolding = false;
         LeftHolding = false;
         OnGround = false;
+        WallStickDebounce = true;
     }
 }

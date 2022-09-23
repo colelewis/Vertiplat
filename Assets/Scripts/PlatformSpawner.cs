@@ -47,7 +47,7 @@ public class PlatformSpawner : MonoBehaviour
                 Destroy(p);
             }
         }
-        Debug.Log(playerInCameraPosition);
+        // Debug.Log(playerInCameraPosition);
     }
 
     IEnumerator spawnPlatforms() {

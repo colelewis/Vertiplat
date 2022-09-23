@@ -11,7 +11,7 @@ public class CockroachMovement : MonoBehaviour
     // Manual Sprite Changes
     public GameObject sprite;
     private float x_sprite_scale;
-    public int direction = 1;
+    [SerializeField] private int _direction = 1; // Default to 1 or right
 
     // Start is called before the first frame update
     void Start()
@@ -23,28 +23,42 @@ public class CockroachMovement : MonoBehaviour
     void Update()
     {
         // Move
+        ChangeDirection(1);
         Move();
         // Don't fall off platforms.
+        if (SeesEdge())
+            ChangeDirection();
     }
 
-    private void Move() {
-        rigid_body.velocity = new Vector2(movement_speed * direction, rigid_body.velocity.y);
+    private void Move()
+    {
+        rigid_body.velocity = new Vector2(movement_speed * _direction, rigid_body.velocity.y);
+    }
+
+    private void ChangeDirection()
+    {
+        ChangeDirection(_direction *= -1);
     }
 
     private void ChangeDirection(int new_direction)
     {
         // Stupid Check.
-        if (new_direction == direction)
+        if (new_direction == _direction)
             return;
         // Update Facing Direction.
-        direction = new_direction;
+        _direction = new_direction;
         x_sprite_scale = sprite.transform.localScale.x;
-        if (direction > 0)   // Moving Right
+        if (_direction > 0)   // Moving Right
             x_sprite_scale = Mathf.Abs(x_sprite_scale);
-        else if (direction == 0f)  // Maintain State
+        else if (_direction == 0f)  // Maintain State
             /* Intentionally Empty */;
-        else if (direction < 0 && x_sprite_scale > 0)  // Moving Left
+        else if (_direction < 0 && x_sprite_scale > 0)  // Moving Left
             x_sprite_scale = x_sprite_scale * -1;
         sprite.transform.localScale = new Vector2(x_sprite_scale, sprite.transform.localScale.y);
+    }
+
+    public bool SeesEdge()
+    {
+        return false;
     }
 }

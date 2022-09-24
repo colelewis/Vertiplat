@@ -86,6 +86,14 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Face the direction you're moving by changing scale.
+        if (HorInput > 0)   // Moving Right
+            NormalXScale = Mathf.Abs(NormalXScale);
+        else if (HorInput == 0f)  // Maintain State
+            /* Intentionally Empty */;
+        else if (HorInput < 0 && NormalXScale > 0)  // Moving Left
+            NormalXScale = NormalXScale * -1;
+        
         HorInput = Input.GetAxisRaw("Horizontal");
         VertInput = Input.GetAxisRaw("Vertical");
         var Jump = Input.GetAxisRaw("Jump");
@@ -221,11 +229,12 @@ public class CharacterController : MonoBehaviour
             WallStickTimer -= Time.deltaTime;
         }
 
-    // Why is this "Fixed"? -Adam
-    // Also how is the engine calling this?
+    }
+
     private void FixedUpdate()
     {
         //deltaTime not needed (im pretty sure)
+
         if(OnGround)
         {
             rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
@@ -238,16 +247,8 @@ public class CharacterController : MonoBehaviour
         }
 
         if (Jumping) rb.velocity = new Vector2(rb.velocity.x, InternalJumpPower);
-
-        // Face the direction you're moving by changing scale.
-        if (HorInput > 0)   // Moving Right
-            NormalXScale = Mathf.Abs(NormalXScale);
-        else if (HorInput == 0f)  // Maintain State
-            /* Intentionally Empty */;
-        else if (HorInput < 0 && NormalXScale > 0)  // Moving Left
-            NormalXScale = NormalXScale * -1;
-
         if (FastFalling) rb.velocity += new Vector2(0, -FastFallRate);
+
 
     }
 

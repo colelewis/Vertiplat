@@ -10,11 +10,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlatformLayer
   - Water
   - UI
+  - Background
   - platform_layer
-  - 
   - 
   - 
   - 

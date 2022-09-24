@@ -71,6 +71,21 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+## END of Unity specific modifiers. ##
+# Ignore GIMP files. Only push the assets used by Unity.
+**/*.xcf*
+
+# Ignore .vscode directory and all silly settings there.
+**/.vscode/*
+
+# Ignore my scribble notes.
+**/adams_links.txt
+
 # DS_Store from macOS
 .DS_Store
 */.DS_Store
+
+# Meta files are not needed for paletts, as they aren't used in game
+**/Assets/Palettes/*.meta
+**/Assets/Palettes.meta
+

@@ -86,6 +86,14 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Face the direction you're moving by changing scale.
+        if (HorInput > 0)   // Moving Right
+            NormalXScale = Mathf.Abs(NormalXScale);
+        else if (HorInput == 0f)  // Maintain State
+            /* Intentionally Empty */;
+        else if (HorInput < 0 && NormalXScale > 0)  // Moving Left
+            NormalXScale = NormalXScale * -1;
+        
         HorInput = Input.GetAxisRaw("Horizontal");
         VertInput = Input.GetAxisRaw("Vertical");
         var Jump = Input.GetAxisRaw("Jump");

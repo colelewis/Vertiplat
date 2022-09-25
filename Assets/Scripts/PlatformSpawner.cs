@@ -28,6 +28,7 @@ public class PlatformSpawner : MonoBehaviour
         pooledPlatforms = new List<GameObject>();
         for (int i = 0; i < poolLimit; i++) {
             GameObject p = (GameObject)Instantiate(platform);
+            p.GetComponent<PlatformColliderToggle>().player = player;
             p.SetActive(false);
             pooledPlatforms.Add(p);
         }
@@ -49,7 +50,7 @@ public class PlatformSpawner : MonoBehaviour
     {
         foreach (GameObject p in pooledPlatforms) {
             Vector3 platformInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(p.transform.position);
-            if (platformInCameraPosition.y < 0f) { // destroy platform if it leaves camera
+            if (platformInCameraPosition.y < -5f) { // destroy platform if it leaves camera
                 p.SetActive(false);
             }
         }

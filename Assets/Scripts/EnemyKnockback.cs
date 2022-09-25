@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EnemyKnockback : MonoBehaviour
 {
-    public float KnockbackMultiplier = 1f;
+    public float KnockbackMultiplier = 1000f;
+    public float KnockbackIncreaseMultiplier = 1.1f;
+    public GameObject KnockbackParticles;
+    public GameObject HitParticles;
 
     private Rigidbody2D rb;
 
@@ -20,13 +23,58 @@ public class EnemyKnockback : MonoBehaviour
         
     }
 
+    void CreateKnockbackParticles(float angle, Vector3 Position)
+    {
+        try
+        {
+            Position = new Vector3(Position.x, Position.y, -3);
+            GameObject dust = Instantiate(KnockbackParticles, Position, Quaternion.identity);
+            dust.transform.localEulerAngles = new Vector3(0, 0, angle);
+            ParticleSystem PS = dust.GetComponent<ParticleSystem>();
+            PS.Play();
+            Destroy(dust, PS.main.duration + 1f);
+        }
+        catch
+        {
+            Debug.Log("KnockbackParticles reference missing");
+        }
+    }
+
+    void CreateHitParticles(Vector3 Position)
+    {
+        try
+        {
+            Position = new Vector3(Position.x, Position.y, -3);
+            GameObject dust = Instantiate(HitParticles, Position, Quaternion.identity);
+            ParticleSystem PS = dust.GetComponent<ParticleSystem>();
+            PS.Play();
+            Destroy(dust, PS.main.duration + 1f);
+        }
+        catch
+        {
+            Debug.Log("HitParticles reference missing");
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Cockroach")
         {
             Vector3 enemyPosition = collision.gameObject.transform.position;
-            Vector2 KnockbackVector = new Vector2(transform.position.x, transform.position.y) - new Vector2(enemyPosition.x, enemyPosition.y);
-            rb.AddForce(KnockbackVector * KnockbackMultiplier);
+            Vector2 KnockbackVector = (new Vector2(transform.position.x, transform.position.y) - new Vector2(enemyPosition.x, enemyPosition.y)).normalized;
+            if(KnockbackVector.x<0.4 && KnockbackVector.x >= 0)
+            {
+                KnockbackVector = new Vector2(0.6f, KnockbackVector.y);
+            }
+            else if(KnockbackVector.x>-0.4 && KnockbackVector.x < 0)
+            {
+                KnockbackVector = new Vector2(-0.6f, KnockbackVector.y);
+            }
+            rb.AddForce(KnockbackVector * KnockbackMultiplier * new Vector2(1f, 1f));
+            FindObjectOfType<HitStop>().Pause(0.083f);
+            CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
+            CreateHitParticles(collision.gameObject.transform.position);
+            KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 
         }
     }

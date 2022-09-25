@@ -241,8 +241,6 @@ public class CharacterController : MonoBehaviour
     {
         //deltaTime not needed (im pretty sure)
 
-        //known glitch: after getting knocked back you can move incredibly fast as long as you dont let your speed dip back under the walkspeed
-
         bool ForceImparted = false;
         if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) //detects if a force was imparted onto the player by an enemy so the speed limit gets turned off
             ForceImparted = true;
@@ -260,11 +258,16 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
+            
             if(!ForceImparted)
             {
+                rb.velocity += new Vector2(HorInput * MoveSpeed * AirResistance, 0);
                 if (rb.velocity.x > MoveSpeed || rb.velocity.x < -MoveSpeed) rb.velocity = new Vector2(HorInput * MoveSpeed, rb.velocity.y);
                 if(HorInput == 0) rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity += new Vector2((HorInput * MoveSpeed * AirResistance)/6, 0);
             }
             
         }

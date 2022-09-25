@@ -180,7 +180,10 @@ public class CharacterController : MonoBehaviour
             {
                 ShrinkTransition = ShrinkTransitionTime; //cap it at max time
             }    
-            sprite.transform.localScale = new Vector3(NormalXScale * 1-(FallShrinkFactor*(ShrinkTransition/ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
+            if (NormalXScale>0)
+                sprite.transform.localScale = new Vector3(NormalXScale * 1 - (FallShrinkFactor*(ShrinkTransition/ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
+            else
+                sprite.transform.localScale = new Vector3(NormalXScale * 1 + (FallShrinkFactor * (ShrinkTransition / ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
         }
         else
         {
@@ -193,7 +196,10 @@ public class CharacterController : MonoBehaviour
             {
                 ShrinkTransition = 0; //cap at 0
             }
-            sprite.transform.localScale = new Vector3(NormalXScale * 1 - (FallShrinkFactor * (ShrinkTransition / ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
+            if (NormalXScale > 0)
+                sprite.transform.localScale = new Vector3(NormalXScale * 1 - (FallShrinkFactor * (ShrinkTransition / ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
+            else
+                sprite.transform.localScale = new Vector3(NormalXScale * 1 + (FallShrinkFactor * (ShrinkTransition / ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
         }
        
         if(!OnGround) //time the jump

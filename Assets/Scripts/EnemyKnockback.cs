@@ -8,6 +8,7 @@ public class EnemyKnockback : MonoBehaviour
     public float KnockbackIncreaseMultiplier = 1.1f;
     public GameObject KnockbackParticles;
     public GameObject HitParticles;
+    public AudioSource HitSound;
 
     private Rigidbody2D rb;
 
@@ -74,6 +75,7 @@ public class EnemyKnockback : MonoBehaviour
             FindObjectOfType<HitStop>().Pause(0.083f);
             CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
             CreateHitParticles(collision.gameObject.transform.position);
+            HitSound.Play();
             KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 
         }

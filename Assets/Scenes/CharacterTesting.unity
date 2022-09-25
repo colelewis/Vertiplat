@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 330884220}
   - component: {fileID: 330884219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,8 +264,69 @@ Transform:
   m_Children:
   - {fileID: 951477698}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &524509899
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313809, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 30874742512313813, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: m_Name
+      value: Cockroach 1 1 (1) 1 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6635636307044615489, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+      propertyPath: platform_layer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
 --- !u!1 &951477697
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951477698}
   - component: {fileID: 951477699}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1016260348}
   - component: {fileID: 1016260347}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +468,7 @@ Transform:
   m_Children:
   - {fileID: 1527491739}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054830897
 GameObject:
@@ -421,6 +482,7 @@ GameObject:
   - component: {fileID: 1054830900}
   - component: {fileID: 1054830899}
   - component: {fileID: 1054830898}
+  - component: {fileID: 1054830902}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -448,8 +510,10 @@ MonoBehaviour:
   FastFallRate: 2
   FallShrinkFactor: 0.05
   ShrinkTransitionTime: 0.1
-  JumpTimingForgiveness: 0.1
-  WallJumpTime: 0.2
+  JumpBufferingTime: 0.1
+  AirResistance: 0.15
+  CoyoteTime: 0.1
+  WallStickTime: 0.067
 --- !u!61 &1054830899
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -512,8 +576,21 @@ Transform:
   - {fileID: 61866810}
   - {fileID: 1467984899}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1054830902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054830897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f70abd143085947b6b0f005bc7329e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KnockbackMultiplier: 600
 --- !u!1 &1361940469
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,14 +620,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa453f642c9894d209ea36af1935dbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 4
-  yPlayerDeviation: 8
   randomXDeviationUpperBound: 0
   randomXDeviationLowerBound: 0
   randomYDeviationUpperBound: 0
   randomYDeviationLowerBound: 0
   platformSpawnYThreshold: 0.6
   platform: {fileID: 9153910225221652390, guid: cc7e37085863c4166b2c7b61b0111ea7, type: 3}
+  pooledPlatforms: []
+  poolLimit: 10
   player: {fileID: 1054830897}
   randomSeed: 99
 --- !u!4 &1361940471
@@ -566,7 +643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1467984896
 GameObject:
@@ -5390,7 +5467,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1527491739}
   - component: {fileID: 1527491740}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5575,7 +5652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1558435485}
   - component: {fileID: 1558435486}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5659,7 +5736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1754027020}
   - component: {fileID: 1754027019}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5706,5 +5783,5 @@ Transform:
   m_Children:
   - {fileID: 1558435485}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -16,6 +16,7 @@ public class PlatformSpawner : MonoBehaviour
 
     public LayerMask platformMask;
     public float platformMinDistance = 2f;
+    public float spawnWaitTime = 1.3f;
 
     // public GameObject movingPlatform;
     // public GameObject 
@@ -68,7 +69,7 @@ public class PlatformSpawner : MonoBehaviour
 
     IEnumerator spawnPlatforms() {
         while(true) {
-            float waitTIme = 1.3f - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2);
+            float waitTime = spawnWaitTime - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2);
             Vector3 playerInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(player.transform.position);
             Vector3 location = UnityEngine.Camera.main.WorldToViewportPoint(Vector3.zero);
             float randomXDeviation = Random.Range(randomXDeviationUpperBound, randomXDeviationLowerBound); // to be tuned
@@ -107,7 +108,7 @@ public class PlatformSpawner : MonoBehaviour
                             {
                                 newPlatform.SetActive(false);
                                 Debug.Log("overlap");
-                                waitTIme = 0;
+                                waitTime = 0;
                             }
                         }
                         
@@ -115,7 +116,7 @@ public class PlatformSpawner : MonoBehaviour
                 }
                 // Debug.Log(spawnedPlatform.transform.position);
             }
-            yield return new WaitForSeconds(waitTIme);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 

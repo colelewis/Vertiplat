@@ -104,41 +104,49 @@ public class PlatformSpawner : MonoBehaviour
             }
             if (playerInCameraPosition.y >= platformSpawnYThreshold)
             { // spawn threshold 
-                GameObject newPlatform = GetPooledPlatform();
-                if (newPlatform != null)
+                try
                 {
-                    newPlatform.transform.position = location;
-                    newPlatform.SetActive(true);
-
-
-                    Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, platformMask); // PlatformLayer is layer 3
-                    Collider2D[] playerCheck = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, playerLayer);
-                    if (platformOverlaps.Length > 0)
+                    GameObject newPlatform = GetPooledPlatform();
+                    if (newPlatform != null)
                     {
-                        for (int i = 0; i < platformOverlaps.Length; i++)
+                        newPlatform.transform.position = location;
+                        newPlatform.SetActive(true);
+
+
+                        Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, platformMask); // PlatformLayer is layer 3
+                        Collider2D[] playerCheck = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, playerLayer);
+                        if (platformOverlaps.Length > 0)
                         {
-                            if (platformOverlaps[i].gameObject.activeSelf && platformOverlaps[i] != newPlatform.GetComponent<Collider2D>())
+                            for (int i = 0; i < platformOverlaps.Length; i++)
                             {
-                                newPlatform.SetActive(false);
-                                Debug.Log("overlap");
-                                waitTime = 0;
+                                if (platformOverlaps[i].gameObject.activeSelf && platformOverlaps[i] != newPlatform.GetComponent<Collider2D>())
+                                {
+                                    newPlatform.SetActive(false);
+                                    waitTime = 0;
+                                }
                             }
-                        }
 
+                        }
+                        if (playerCheck.Length > 0 && spawnCockroach)
+                        {
+                            newPlatform.SetActive(false);
+                            Debug.Log("overlap");
+                            waitTime = 0;
+                        }
                     }
-                    if (playerCheck.Length > 0 && spawnCockroach)
+
+                    if (spawnCockroach && newPlatform.activeSelf)
                     {
-                        newPlatform.SetActive(false);
-                        Debug.Log("overlap");
-                        waitTime = 0;
+                        Instantiate(cockroach, new Vector2(newPlatform.transform.position.x, newPlatform.transform.position.y + 0.2f), Quaternion.identity);
+                        newPlatform.transform.localScale = new Vector3(2f, 2f, 2f);
                     }
                 }
-                // Debug.Log(spawnedPlatform.transform.position);
-                if (spawnCockroach && newPlatform.activeSelf)
+                catch
                 {
-                    Instantiate(cockroach, new Vector2(newPlatform.transform.position.x, newPlatform.transform.position.y + 0.2f), Quaternion.identity);
-                    newPlatform.transform.localScale = new Vector3(2f, 2f, 2f);
+                    Debug.Log("No available platform");
                 }
+                
+                // Debug.Log(spawnedPlatform.transform.position
             }
 
 

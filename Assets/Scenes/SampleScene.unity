@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2056690081570350311}
-  RiseSpeed: 0.1
+  RiseSpeed: 1
   CatchUpLeeway: 3
   ZAxis: -10
 --- !u!1 &800757351
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomXDeviationUpperBound: 0.7
   randomXDeviationLowerBound: -0.7
-  randomYDeviationUpperBound: 0.8
+  randomYDeviationUpperBound: 0.08
   randomYDeviationLowerBound: 0.07
   platformSpawnYThreshold: 0.08
   platform: {fileID: 9153910225221652390, guid: cc7e37085863c4166b2c7b61b0111ea7, type: 3}

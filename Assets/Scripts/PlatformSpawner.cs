@@ -74,8 +74,8 @@ public class PlatformSpawner : MonoBehaviour
             float randomXDeviation = Random.Range(randomXDeviationUpperBound, randomXDeviationLowerBound); // to be tuned
             float randomYDeviation = Random.Range(randomYDeviationLowerBound, randomYDeviationUpperBound); // to be tuned
 
-            //location.x = Mathf.Clamp((playerInCameraPosition.x + randomXDeviation), -1, 1);
-            location.x = Mathf.Clamp((location.x + randomXDeviation), -1, 1);
+            location.x = Mathf.Clamp((playerInCameraPosition.x + randomXDeviation), -1, 1);
+            //location.x = Mathf.Clamp((location.x + randomXDeviation), -1, 1);
             // location.y = Mathf.Clamp((playerInCameraPosition.y + randomYDeviation), (playerInCameraPosition.y + platform.GetComponent<BoxCollider2D>().bounds.size.y), (playerInCameraPosition.y + randomYDeviationUpperBound));
             location.y = (playerInCameraPosition.y - 0.01f) + randomYDeviation;
 

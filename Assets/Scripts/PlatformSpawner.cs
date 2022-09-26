@@ -14,6 +14,9 @@ public class PlatformSpawner : MonoBehaviour
     public List<GameObject> pooledPlatforms;
     public int poolLimit = 10;
 
+    public LayerMask platformMask;
+    public float platformMinDistance = 2f;
+
     // public GameObject movingPlatform;
     // public GameObject 
 
@@ -32,7 +35,11 @@ public class PlatformSpawner : MonoBehaviour
             p.SetActive(false);
             pooledPlatforms.Add(p);
         }
-        Random.InitState(randomSeed);
+        if(randomSeed != 0)
+        {
+            Random.InitState(randomSeed);
+        }
+        
         StartCoroutine(spawnPlatforms());
     }
 
@@ -50,7 +57,7 @@ public class PlatformSpawner : MonoBehaviour
     {
         foreach (GameObject p in pooledPlatforms) {
             Vector3 platformInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(p.transform.position);
-            if (platformInCameraPosition.y < -5f) { // destroy platform if it leaves camera
+            if (platformInCameraPosition.y < -0.2f) { // destroy platform if it leaves camera
                 p.SetActive(false);
             }
         }
@@ -61,32 +68,63 @@ public class PlatformSpawner : MonoBehaviour
 
     IEnumerator spawnPlatforms() {
         while(true) {
+            float waitTIme = 1.3f - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2);
             Vector3 playerInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(player.transform.position);
             Vector3 location = UnityEngine.Camera.main.WorldToViewportPoint(Vector3.zero);
             float randomXDeviation = Random.Range(randomXDeviationUpperBound, randomXDeviationLowerBound); // to be tuned
             float randomYDeviation = Random.Range(randomYDeviationLowerBound, randomYDeviationUpperBound); // to be tuned
 
-            location.x = Mathf.Clamp((playerInCameraPosition.x + randomXDeviation), -1, 1);
+            //location.x = Mathf.Clamp((playerInCameraPosition.x + randomXDeviation), -1, 1);
+            location.x = Mathf.Clamp((location.x + randomXDeviation), -1, 1);
             // location.y = Mathf.Clamp((playerInCameraPosition.y + randomYDeviation), (playerInCameraPosition.y + platform.GetComponent<BoxCollider2D>().bounds.size.y), (playerInCameraPosition.y + randomYDeviationUpperBound));
             location.y = (playerInCameraPosition.y - 0.01f) + randomYDeviation;
 
             location = UnityEngine.Camera.main.ViewportToWorldPoint(location); // convert back to world space
-
+            if(location.x<-11)
+            {
+                float newX = -11 + Mathf.Abs(location.x + 11);
+                location = new Vector3(newX, location.y, location.z);
+            }
+            else if(location.x > 11)
+            {
+                float newX = 11 - (location.x - 11);
+                location = new Vector3(newX, location.y, location.z);
+            }
             if (playerInCameraPosition.y >= platformSpawnYThreshold) { // spawn threshold 
                 GameObject newPlatform = GetPooledPlatform();
-                if (newPlatform != null) {
+                if (newPlatform != null)
+                {
                     newPlatform.transform.position = location;
                     newPlatform.SetActive(true);
-                }
 
-                Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, 3.5f, 3); // PlatformLayer is layer 3
-                    if (platformOverlaps.Length > 0) {
-                        newPlatform.SetActive(false);
+
+                    Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, platformMask); // PlatformLayer is layer 3
+                    if (platformOverlaps.Length > 0)
+                    {
+                        for(int i=0;i<platformOverlaps.Length;i++)
+                        {
+                            if(platformOverlaps[i].gameObject.activeSelf && platformOverlaps[i] != newPlatform.GetComponent<Collider2D>())
+                            {
+                                newPlatform.SetActive(false);
+                                Debug.Log("overlap");
+                                waitTIme = 0;
+                            }
+                        }
+                        
+                    }
                 }
-                
                 // Debug.Log(spawnedPlatform.transform.position);
             }
-            yield return new WaitForSeconds(1.3f - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2));
+            yield return new WaitForSeconds(waitTIme);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (GameObject p in pooledPlatforms)
+        {
+            Gizmos.DrawWireSphere(p.transform.position, platformMinDistance);
         }
     }
 }

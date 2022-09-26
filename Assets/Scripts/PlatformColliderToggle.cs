@@ -7,6 +7,7 @@ public class PlatformColliderToggle : MonoBehaviour
     public GameObject player;
 
     private Collider2D PlatformCollider;
+    private Collider2D PlayerCollider;
     private float colliderXSize;
     private float colliderYSize;
     private float playerXSize;
@@ -18,9 +19,9 @@ public class PlatformColliderToggle : MonoBehaviour
         colliderXSize = PlatformCollider.bounds.size.x /2;
         colliderYSize = PlatformCollider.bounds.size.y /2;
 
-        var playerCollider = player.GetComponent<Collider2D>();
-        playerXSize = playerCollider.bounds.size.x;
-        playerYSize = playerCollider.bounds.size.y;
+        PlayerCollider = player.GetComponent<Collider2D>();
+        playerXSize = PlayerCollider.bounds.size.x;
+        playerYSize = PlayerCollider.bounds.size.y;
     }
 
     // Update is called once per frame
@@ -32,12 +33,12 @@ public class PlatformColliderToggle : MonoBehaviour
         if (playerLeft < transform.position.x + colliderXSize && playerRight > transform.position.x - colliderXSize && 
             playerBottom < transform.position.y+colliderYSize)
         {
-            PlatformCollider.enabled = false;
+            Physics2D.IgnoreCollision(PlatformCollider, PlayerCollider, true);
             
         }
         else
         {
-            PlatformCollider.enabled = true;
+            Physics2D.IgnoreCollision(PlatformCollider, PlayerCollider, false);
         }
     }
 }

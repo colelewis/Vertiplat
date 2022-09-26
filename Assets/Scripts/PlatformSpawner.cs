@@ -24,6 +24,7 @@ public class PlatformSpawner : MonoBehaviour
 
 
     public GameObject player;
+    public GameObject cockroach;
     public int randomSeed;
 
     // Start is called before the first frame update
@@ -116,6 +117,8 @@ public class PlatformSpawner : MonoBehaviour
                 }
                 // Debug.Log(spawnedPlatform.transform.position);
             }
+
+            
             yield return new WaitForSeconds(waitTime);
         }
     }

@@ -74,7 +74,7 @@ public class EnemyKnockback : MonoBehaviour
             rb.AddForce(KnockbackVector * KnockbackMultiplier * new Vector2(1f, 1f));
             FindObjectOfType<HitStop>().Pause(0.083f);
             CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
-            CreateHitParticles(collision.gameObject.transform.position);
+            CreateHitParticles(collision.contacts[Mathf.RoundToInt(collision.contacts.Length/2)].point);
             HitSound.Play();
             KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 

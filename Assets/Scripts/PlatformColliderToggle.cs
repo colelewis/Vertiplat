@@ -27,6 +27,10 @@ public class PlatformColliderToggle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        colliderXSize = PlatformCollider.bounds.size.x / 2;
+        colliderYSize = PlatformCollider.bounds.size.y / 2;
+        playerXSize = PlayerCollider.bounds.size.x;
+        playerYSize = PlayerCollider.bounds.size.y;
         float playerRight = player.transform.position.x + playerXSize / 2;
         float playerLeft = player.transform.position.x - playerXSize / 2;
         float playerBottom = player.transform.position.y - playerYSize / 2;
@@ -34,11 +38,15 @@ public class PlatformColliderToggle : MonoBehaviour
             playerBottom < transform.position.y+colliderYSize)
         {
             Physics2D.IgnoreCollision(PlatformCollider, PlayerCollider, true);
+            //GetComponentInChildren<SpriteRenderer>().color = Color.red;
             
         }
         else
         {
             Physics2D.IgnoreCollision(PlatformCollider, PlayerCollider, false);
+            //GetComponentInChildren<SpriteRenderer>().color = Color.white;
         }
+        //Debug.DrawLine(new Vector3(transform.position.x + colliderXSize, transform.position.y, -3), new Vector3(transform.position.x + colliderXSize, -2, 0), Color.red, -3);
+        //Debug.DrawLine(new Vector3(transform.position.x - colliderXSize, transform.position.y, -3), new Vector3(transform.position.x - colliderXSize, -2, 0), Color.red, -3);
     }
 }

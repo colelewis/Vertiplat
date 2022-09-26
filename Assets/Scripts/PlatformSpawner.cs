@@ -109,8 +109,13 @@ public class PlatformSpawner : MonoBehaviour
                     GameObject newPlatform = GetPooledPlatform();
                     if (newPlatform != null)
                     {
+                        newPlatform.transform.localScale = new Vector3(1f, 1f, 1f);
                         newPlatform.transform.position = location;
                         newPlatform.SetActive(true);
+                        if(!spawnCockroach && Random.Range(1,100) <= 25)
+                        {
+                            newPlatform.transform.localScale = new Vector3(2f, 2f, 2f);
+                        }
 
 
                         Collider2D[] platformOverlaps = Physics2D.OverlapCircleAll(newPlatform.transform.position, platformMinDistance, platformMask); // PlatformLayer is layer 3

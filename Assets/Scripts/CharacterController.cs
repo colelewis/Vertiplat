@@ -49,6 +49,7 @@ public class CharacterController : MonoBehaviour
     private float playerSizeX;
     private float WallStickTimer;
     private bool WallStickDebounce;
+    private bool CanDoubleJump = true;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -147,6 +148,13 @@ public class CharacterController : MonoBehaviour
             {   
                 if (!OnGround && !Jumping && JumpDebounce) //valid jump input, but player still in air
                 {
+                    if (CanDoubleJump)
+                    {
+                        CurrentJumpHoldTime = JumpHoldTime;
+                        rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump
+                        CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY / 2, -1f));
+                        CanDoubleJump = false;
+                    }
                     LastJumpClock = 0; //track jump input
                     JumpDebounce = false;
                 }
@@ -290,6 +298,7 @@ public class CharacterController : MonoBehaviour
         if(Mathf.Approximately(angle, 0) && !OnGround && rb.velocity.y <= 0)
         {
             //Debug.Log("Ground");
+            CanDoubleJump = true;
             OnGround = true;
             LastOnGround = 0;
             if (LastJumpClock <= JumpBufferingTime)

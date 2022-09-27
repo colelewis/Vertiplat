@@ -50,6 +50,7 @@ public class CharacterController : MonoBehaviour
     private float WallStickTimer;
     private bool WallStickDebounce;
     private bool CanDoubleJump = true;
+    private bool hardMode;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -82,6 +83,12 @@ public class CharacterController : MonoBehaviour
         NormalXScale = sprite.transform.localScale.x;
         playerSizeX = GetComponent<Collider2D>().bounds.size.x;
         playerSizeY = GetComponent<Collider2D>().bounds.size.y;
+
+    }
+
+    private void Awake()
+    {
+        hardMode = FindObjectOfType<GameManager>().Hardmode;
     }
 
     // Update is called once per frame
@@ -148,7 +155,7 @@ public class CharacterController : MonoBehaviour
             {   
                 if (!OnGround && !Jumping && JumpDebounce) //valid jump input, but player still in air
                 {
-                    if (CanDoubleJump)
+                    if (CanDoubleJump && !hardMode)
                     {
                         CurrentJumpHoldTime = JumpHoldTime;
                         rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump

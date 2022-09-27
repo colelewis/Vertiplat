@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuRouter : MonoBehaviour
 {
     public GameObject MainMenu;
+    public GameObject HowToPlayPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,14 @@ public class MainMenuRouter : MonoBehaviour
 
     public void QuitButton() {
         Application.Quit();
+    }
+
+    public void HowToPlay() {
+        HowToPlayPanel.SetActive(true);
+    }
+
+    public void HideHowToPlay() {
+        HowToPlayPanel.SetActive(false);
     }
 
     // Update is called once per frame

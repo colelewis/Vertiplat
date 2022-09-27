@@ -300,14 +300,16 @@ public class CharacterController : MonoBehaviour
         float angle = Vector3.Angle(normal, Vector3.up);
         if(WallStickDebounce)
             WallStickTimer = WallStickTime;
+
         if(!RightHolding && !LeftHolding)
             InternalJumpPower = JumpPower;
+            
         if(Mathf.Approximately(angle, 0) && !OnGround && rb.velocity.y <= 0)
         {
-            //Debug.Log("Ground");
+            // Debug.Log("Ground");
             CanDoubleJump = true;
             OnGround = true;
-            LastOnGround = 0;
+            LastOnGround = 0f;
             if (LastJumpClock <= JumpBufferingTime)
             {
                 JumpDebounce = true;

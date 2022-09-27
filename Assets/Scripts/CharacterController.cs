@@ -157,6 +157,7 @@ public class CharacterController : MonoBehaviour
                 {
                     if (CanDoubleJump && !hardMode)
                     {
+                        InternalJumpPower = JumpPower;
                         CurrentJumpHoldTime = JumpHoldTime;
                         rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump
                         CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY / 2, -1f));

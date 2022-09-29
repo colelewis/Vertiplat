@@ -1084,7 +1084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 108.5366, y: -13.3913}
+  m_AnchoredPosition: {x: 108.5366, y: -8}
   m_SizeDelta: {x: 171.0732, y: 22.7826}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915700609
@@ -1109,7 +1109,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1120,7 +1120,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hard mode (no double jump)
+  m_Text: Hard Mode
 --- !u!222 &915700610
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1250,7 +1250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 612, y: 612}
+  m_SizeDelta: {x: 1366, y: 1366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282131712
 MonoBehaviour:
@@ -1518,7 +1518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 156, y: 220}
+  m_AnchoredPosition: {x: 237, y: 220}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457415417
@@ -1823,8 +1823,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -161, y: 220}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -270, y: 220}
+  m_SizeDelta: {x: 338.2944, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1605441764
 MonoBehaviour:
@@ -1849,7 +1849,11 @@ MonoBehaviour:
   m_text: 'Movement is along four axes: W, A, S, D or up, left, down, and right respectively.
 
     Jump
-    is regarded as ''up''. You can pause with ''P'' during gameplay. '
+    is regarded as ''up'' or ''space''. If you touch a platform''s side while falling
+    you will slide down it. If you jump away from a platform while sliding down it,
+    you will perform a wall jump. If you jump while in the air, you will perform
+    a double jump. If you turn on hard mode however, double jumping will be disabled.
+    You can pause with ''P'' during gameplay. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1912,7 +1916,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -109.84985}
+  m_margin: {x: 0, y: 0, z: -76.061905, w: -232.58609}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

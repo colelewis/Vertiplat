@@ -7,11 +7,12 @@ public class GameOverScreenHandler : MonoBehaviour
 
     public GameObject player;
     public GameObject gameOverMenu;
+    public GameObject KnockbackOverlay;
     public AudioSource audio;
     
 
     public void Quit() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        Application.Quit();
     }
 
     public void PlayAgain() {
@@ -31,7 +32,9 @@ public class GameOverScreenHandler : MonoBehaviour
         if (playerInCameraPosition.y < -0.08f) {
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
+            KnockbackOverlay.SetActive(false);
             audio.Pause();
+
         } else {
             Time.timeScale = 1f;
             gameOverMenu.SetActive(false);

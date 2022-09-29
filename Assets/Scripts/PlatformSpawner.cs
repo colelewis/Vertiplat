@@ -135,7 +135,7 @@ public class PlatformSpawner : MonoBehaviour
                         if (playerCheck.Length > 0 && spawnCockroach)
                         {
                             newPlatform.SetActive(false);
-                            Debug.Log("overlap");
+                            // Debug.Log("overlap");
                             waitTime = 0;
                         }
                     }

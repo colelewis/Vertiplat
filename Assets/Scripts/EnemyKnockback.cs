@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyKnockback : MonoBehaviour
 {
+    
     public float KnockbackMultiplier = 1000f;
     public float KnockbackIncreaseMultiplier = 1.1f;
     public GameObject KnockbackParticles;
@@ -11,6 +13,8 @@ public class EnemyKnockback : MonoBehaviour
     public AudioSource HitSound;
 
     private Rigidbody2D rb;
+
+    public GameObject canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +25,8 @@ public class EnemyKnockback : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float processedKnockbackMultiplier = Mathf.Round((KnockbackMultiplier - 1000) / 10) * 100.0f * 0.001f;
+        canvas.transform.Find("KnockbackOverlay").GetComponent<TextMeshProUGUI>().text = "Knockback: " + processedKnockbackMultiplier.ToString() + "%";
     }
 
     void CreateKnockbackParticles(float angle, Vector3 Position)

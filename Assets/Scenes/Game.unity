@@ -758,7 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2056690081570350311}
   gameOverMenu: {fileID: 1417822969}
-  KnockbackOverlay: {fileID: 0}
+  KnockbackOverlay: {fileID: 1385970263}
   audio: {fileID: 1822136088}
 --- !u!1 &647236857
 GameObject:
@@ -1992,8 +1992,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2028,7 +2028,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 9.491592, z: 0, w: 0}
+  m_margin: {x: 0, y: 14.454926, z: -129.35785, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

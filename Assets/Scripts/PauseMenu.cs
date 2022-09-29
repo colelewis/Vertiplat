@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    private bool IsPaused;
+
     [SerializeField]
     private GameObject pauseMenu;
 
@@ -23,7 +25,7 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        IsPaused = false;
     }
 
     // Update is called once per frame
@@ -33,12 +35,17 @@ public class PauseMenu : MonoBehaviour
             pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
         }
         if (pauseMenu.activeInHierarchy) {
+            IsPaused = true;
             Time.timeScale = 0f;
             audio.Pause();
 
         } else {
-            Time.timeScale = 1f;
-            audio.UnPause();
+            if(IsPaused == true && !pauseMenu.activeInHierarchy)
+            {
+                Time.timeScale = 1f;
+                audio.UnPause();
+                IsPaused = false;
+            }
         }
     }
 }

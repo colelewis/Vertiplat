@@ -20,7 +20,6 @@ public class ScoreManager : MonoBehaviour
     void Update()
     {
         int currScore = Mathf.RoundToInt(transform.position.y*10);
-        Debug.Log(currScore);
         if(currScore>score)
         {
             score = currScore;

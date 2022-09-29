@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -81}
+  m_AnchoredPosition: {x: 16, y: -189}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &216907329
@@ -837,8 +837,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: OK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
+  m_sharedMaterial: {fileID: 2125224909302480287, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1250,7 +1250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 552, y: 552}
+  m_SizeDelta: {x: 1321, y: 1321}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282131712
 MonoBehaviour:
@@ -1518,7 +1518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237, y: 220}
+  m_AnchoredPosition: {x: 334, y: 220}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457415417
@@ -1546,8 +1546,8 @@ MonoBehaviour:
     to avoid the bottom edge of the camera. The game will end if you fall below the
     camera.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
+  m_sharedMaterial: {fileID: 2125224909302480287, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1607,7 +1607,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -100.60661, y: 0, z: -18.779854, w: -160.82376}
+  m_margin: {x: -100.60661, y: 0, z: -18.779854, w: -259.4895}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1823,7 +1823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: 220}
+  m_AnchoredPosition: {x: -338, y: 220}
   m_SizeDelta: {x: 338.2944, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1605441764
@@ -1855,8 +1855,8 @@ MonoBehaviour:
     a double jump. If you turn on hard mode however, double jumping will be disabled.
     You can pause with ''P'' during gameplay. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
+  m_sharedMaterial: {fileID: 2125224909302480287, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -76.061905, w: -232.58609}
+  m_margin: {x: 0, y: 0, z: -76.061905, w: -395.20184}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

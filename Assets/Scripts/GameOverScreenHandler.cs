@@ -7,6 +7,7 @@ public class GameOverScreenHandler : MonoBehaviour
 
     public GameObject player;
     public GameObject gameOverMenu;
+    public AudioSource audio;
     
 
     public void Quit() {
@@ -20,7 +21,7 @@ public class GameOverScreenHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        
     }
 
     // Update is called once per frame
@@ -30,6 +31,7 @@ public class GameOverScreenHandler : MonoBehaviour
         if (playerInCameraPosition.y < -0.08f) {
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
+            audio.Pause();
         } else {
             Time.timeScale = 1f;
             gameOverMenu.SetActive(false);

@@ -25,7 +25,7 @@ public class ScoreManager : MonoBehaviour
         {
             score = currScore;
             ScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
-            gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = score.ToString();
+            gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
         }
     }
 }

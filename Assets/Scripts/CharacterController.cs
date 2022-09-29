@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -88,7 +88,14 @@ public class CharacterController : MonoBehaviour
 
     private void Awake()
     {
-        hardMode = FindObjectOfType<GameManager>().Hardmode;
+        if (FindObjectOfType<GameManager>() != null)
+        {
+            hardMode = FindObjectOfType<GameManager>().Hardmode;
+        }
+        else
+        {
+            hardMode = false;
+        }
     }
 
     // Update is called once per frame
@@ -296,7 +303,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnCollisionTouch(Collision2D collision) //for both collision enter and collision stay
     {
-        
+
         Vector3 normal = collision.contacts[0].normal;
         float angle = Vector3.Angle(normal, Vector3.up);
         if(WallStickDebounce)

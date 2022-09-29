@@ -8,6 +8,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject ScoreText;
+    public GameObject gameOverMenu;
 
     private int score;
 
@@ -24,7 +25,7 @@ public class ScoreManager : MonoBehaviour
         {
             score = currScore;
             ScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
-
+            gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = score.ToString();
         }
     }
 }

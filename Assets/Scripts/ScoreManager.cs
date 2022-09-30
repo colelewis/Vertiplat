@@ -12,11 +12,13 @@ public class ScoreManager : MonoBehaviour
     public GameObject gameOverMenu;
 
     private int score;
+    private bool HardMode;
 
     void Start()
     {
         score = 0;
         GM = FindObjectOfType<GameManager>();
+        HardMode = GM.Hardmode;
         gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
         gameOverMenu.transform.Find("HighScoreText").GetComponent<TextMeshProUGUI>().text = "High Score: " + GM.HighScore.ToString();
     }
@@ -24,7 +26,10 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int currScore = Mathf.RoundToInt(transform.position.y*10);
+        int HardModeMult = 1;
+        if (HardMode)
+            HardModeMult = 2;
+        int currScore = Mathf.RoundToInt(transform.position.y*10) * HardModeMult;
         if(currScore>score)
         {
             score = currScore;

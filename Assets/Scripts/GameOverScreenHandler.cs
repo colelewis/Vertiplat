@@ -39,9 +39,12 @@ public class GameOverScreenHandler : MonoBehaviour
             GameOverSound.PlayOneShot(GameOverSound.clip, 0.3f);
 
         } else {
-            Time.timeScale = 1f;
-            gameOverMenu.SetActive(false);
-            JumpSound.mute = false;
+            if (gameOverMenu.activeSelf)
+            {
+                Time.timeScale = 1f;
+                gameOverMenu.SetActive(false);
+                JumpSound.mute = false;
+            }
         }
         
     }

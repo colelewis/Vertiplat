@@ -28,7 +28,8 @@ public class CharacterController : MonoBehaviour
     public float CoyoteTime = 0.1f; //time that the player still has to jump after walking off a platform
     public float WallStickTime = 0.067f; //how long the player sticks to a wall after moving away from it. this is to help pull off a more consistent wall jump. current time is 4 frames (assuming 60fps)
 
-    private bool FastFalling = false;
+    public bool FastFalling = false; //public so it can be accessed in knockback script
+
     private bool Jumping = false;
     private bool OnGround;
     private Rigidbody2D rb;
@@ -207,6 +208,8 @@ public class CharacterController : MonoBehaviour
                 sprite.transform.localScale = new Vector3(NormalXScale * 1 - (FallShrinkFactor*(ShrinkTransition/ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
             else
                 sprite.transform.localScale = new Vector3(NormalXScale * 1 + (FallShrinkFactor * (ShrinkTransition / ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size
+
+            //Debug.Log(sprite.transform.localScale);
         }
         else
         {

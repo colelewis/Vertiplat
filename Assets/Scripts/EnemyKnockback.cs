@@ -11,8 +11,11 @@ public class EnemyKnockback : MonoBehaviour
     public GameObject KnockbackParticles;
     public GameObject HitParticles;
     public AudioSource HitSound;
+    public Material StarMat;
 
     private Rigidbody2D rb;
+    private CharacterController cc;
+    private bool roachBoosted;
 
     public GameObject canvas;
 
@@ -20,6 +23,7 @@ public class EnemyKnockback : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        cc = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -66,21 +70,43 @@ public class EnemyKnockback : MonoBehaviour
     {
         if(collision.gameObject.tag == "Cockroach")
         {
+            StarMat.color = Color.yellow;
+            roachBoosted = false;
             Vector3 enemyPosition = collision.gameObject.transform.position;
             Vector2 KnockbackVector = (new Vector2(transform.position.x, transform.position.y) - new Vector2(enemyPosition.x, enemyPosition.y)).normalized;
-            if(KnockbackVector.x<0.4 && KnockbackVector.x >= 0)
+            if(!cc.FastFalling)
             {
-                KnockbackVector = new Vector2(0.6f, KnockbackVector.y);
+                if(KnockbackVector.x<0.4 && KnockbackVector.x >= 0)
+                {
+                    KnockbackVector = new Vector2(0.6f, KnockbackVector.y);
+                }
+                else if(KnockbackVector.x>-0.4 && KnockbackVector.x < 0)
+                {
+                    KnockbackVector = new Vector2(-0.6f, KnockbackVector.y);
+                }
             }
-            else if(KnockbackVector.x>-0.4 && KnockbackVector.x < 0)
+            else
             {
-                KnockbackVector = new Vector2(-0.6f, KnockbackVector.y);
+                if(KnockbackVector.x < 0.4 && KnockbackVector.x >= 0 || KnockbackVector.x > -0.4 && KnockbackVector.x < 0)
+                {
+                    Debug.Log("roach boost");
+                    KnockbackVector = new Vector2(KnockbackVector.x, KnockbackVector.y * 0.8f);
+                    StarMat.color = Color.green;
+                    roachBoosted = true;
+                }
             }
-            rb.AddForce(KnockbackVector * KnockbackMultiplier * new Vector2(1f, 1f));
+            if(roachBoosted)
+            {
+                cc.FastFalling = false;
+                rb.velocity = Vector2.zero;
+            }
+            rb.AddForce(KnockbackVector * KnockbackMultiplier);
             FindObjectOfType<HitStop>().Pause(0.083f);
             CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
             CreateHitParticles(collision.contacts[Mathf.RoundToInt(collision.contacts.Length/2)].point);
             HitSound.Play();
+            Debug.Log(cc.GetComponent<Rigidbody2D>().velocity);
+            Debug.Log("fast falling: "+cc.FastFalling);
             KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 
         }

@@ -3097,6 +3097,7 @@ MonoBehaviour:
   AirResistance: 0.15
   CoyoteTime: 0.1
   WallStickTime: 0.067
+  FastFalling: 0
 --- !u!114 &7925136302310432427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3114,6 +3115,7 @@ MonoBehaviour:
   KnockbackParticles: {fileID: 6620507778512260424, guid: a89b4ef7251a3e44cb9403b6e407c69d, type: 3}
   HitParticles: {fileID: 7834436253277174972, guid: 790efd164361be0409b9ce67099b1736, type: 3}
   HitSound: {fileID: 800757352}
+  StarMat: {fileID: 2100000, guid: 73138c4095932254fb100949067c9ecf, type: 2}
   canvas: {fileID: 545096174}
 --- !u!114 &7925136302310432428
 MonoBehaviour:

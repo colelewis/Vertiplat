@@ -28,6 +28,8 @@ public class PlatformSpawner : MonoBehaviour
     public GameObject cockroach;
     public int randomSeed;
 
+    private int SpawnedPlatforms;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,9 +67,10 @@ public class PlatformSpawner : MonoBehaviour
         foreach (GameObject p in pooledPlatforms)
         {
             Vector3 platformInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(p.transform.position);
-            if (platformInCameraPosition.y < -0.2f)
+            if (platformInCameraPosition.y < -0.2f && p.activeSelf)
             { // destroy platform if it leaves camera
                 p.SetActive(false);
+                SpawnedPlatforms--;
             }
         }
 
@@ -81,6 +84,8 @@ public class PlatformSpawner : MonoBehaviour
         {
             bool spawnCockroach = Random.Range(1, 100) <= 50;
             float waitTime = spawnWaitTime - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2);
+            if (SpawnedPlatforms < 2)
+                waitTime = 0f;
             Vector3 playerInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(player.transform.position);
             Vector3 location = UnityEngine.Camera.main.WorldToViewportPoint(Vector3.zero);
             float randomXDeviation = Random.Range(randomXDeviationUpperBound, randomXDeviationLowerBound); // to be tuned
@@ -144,6 +149,11 @@ public class PlatformSpawner : MonoBehaviour
                     {
                         Instantiate(cockroach, new Vector2(newPlatform.transform.position.x, newPlatform.transform.position.y + 0.2f), Quaternion.identity);
                         newPlatform.transform.localScale = new Vector3(2f, 2f, 2f);
+                    }
+
+                    if(newPlatform.activeSelf)
+                    {
+                        SpawnedPlatforms++;
                     }
                 }
                 catch

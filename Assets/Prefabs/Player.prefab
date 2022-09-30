@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 2056690081507618874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: -0.96370465, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2056690080959212376}
@@ -191,6 +191,7 @@ MonoBehaviour:
   AirResistance: 0.15
   CoyoteTime: 0.1
   WallStickTime: 0.067
+  FastFalling: 0
 --- !u!114 &7925136302238943862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,4 +209,5 @@ MonoBehaviour:
   KnockbackParticles: {fileID: 6620507778512260424, guid: a89b4ef7251a3e44cb9403b6e407c69d, type: 3}
   HitParticles: {fileID: 7834436253277174972, guid: 790efd164361be0409b9ce67099b1736, type: 3}
   HitSound: {fileID: 0}
+  StarMat: {fileID: 0}
   canvas: {fileID: 0}

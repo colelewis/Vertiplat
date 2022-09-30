@@ -1577,7 +1577,7 @@ MonoBehaviour:
   platformMinDistance: 3.5
   spawnWaitTime: 1.3
   player: {fileID: 2056690081570350311}
-  cockroach: {fileID: 30874742512313813, guid: db2a3f7cff8d06235ae172ee800e0520, type: 3}
+  cockroach: {fileID: 8362823137779905624, guid: f2738ec5e91ec3061abf52c4aeb28e56, type: 3}
   randomSeed: 0
 --- !u!4 &1206346952
 Transform:

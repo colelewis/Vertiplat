@@ -13,7 +13,7 @@ public class CockroachClean : MonoBehaviour
         Vector3 roachCameraPos = UnityEngine.Camera.main.WorldToViewportPoint(transform.position);
         if (roachCameraPos.y < -0.2f)
         {
-            Debug.Log("destroy roach");
+            //Debug.Log("destroy roach");
             Destroy(gameObject, 0.0f);
         }
     }

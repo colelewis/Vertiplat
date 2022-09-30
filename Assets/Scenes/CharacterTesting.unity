@@ -822,7 +822,7 @@ GameObject:
   - component: {fileID: 1054830898}
   - component: {fileID: 1054830902}
   m_Layer: 2
-  m_Name: Player
+  m_Name: Sad Player :(
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -852,6 +852,7 @@ MonoBehaviour:
   AirResistance: 0.15
   CoyoteTime: 0.1
   WallStickTime: 0.067
+  FastFalling: 0
 --- !u!61 &1054830899
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -932,6 +933,7 @@ MonoBehaviour:
   KnockbackParticles: {fileID: 6620507778512260424, guid: a89b4ef7251a3e44cb9403b6e407c69d, type: 3}
   HitParticles: {fileID: 7834436253277174972, guid: 790efd164361be0409b9ce67099b1736, type: 3}
   HitSound: {fileID: 1880696579}
+  StarMat: {fileID: 0}
   canvas: {fileID: 0}
 --- !u!1001 &1150078937
 PrefabInstance:

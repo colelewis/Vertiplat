@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Manager;
-    public bool Hardmode;
+    public bool Hardmode = false;
     public int HighScore;
+    public Toggle HardModeButton;
 
     public void Awake()
     {

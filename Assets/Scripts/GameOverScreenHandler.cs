@@ -36,8 +36,12 @@ public class GameOverScreenHandler : MonoBehaviour
             audio.Pause();
 
         } else {
-            Time.timeScale = 1f;
-            gameOverMenu.SetActive(false);
+            if(gameOverMenu.activeSelf)
+            {
+                Time.timeScale = 1f;
+                gameOverMenu.SetActive(false);
+            }
+            
         }
         
     }

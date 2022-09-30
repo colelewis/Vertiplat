@@ -10,6 +10,7 @@ public class GameOverScreenHandler : MonoBehaviour
     public GameObject KnockbackOverlay;
     public AudioSource BGM;
     public AudioSource JumpSound;
+    public AudioSource GameOverSound;
 
     public void Quit() {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
@@ -35,6 +36,7 @@ public class GameOverScreenHandler : MonoBehaviour
             KnockbackOverlay.SetActive(false);
             BGM.Pause();
             JumpSound.mute = true;
+            GameOverSound.PlayOneShot(GameOverSound.clip, 0.3f);
 
         } else {
             Time.timeScale = 1f;

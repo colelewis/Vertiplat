@@ -1899,8 +1899,8 @@ MonoBehaviour:
     is regarded as ''up'' or ''space''. If you touch a platform''s side while falling
     you will slide down it. If you jump away from a platform while sliding down it,
     you will perform a wall jump. If you jump while in the air, you will perform
-    a double jump. If you turn on hard mode however, double jumping will be disabled.
-    You can pause with ''P'' during gameplay. '
+    a double jump. If you turn on hard mode however, double jumping will be disabled
+    (but you will get double points!). You can pause with ''P'' during gameplay. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}
   m_sharedMaterial: {fileID: 2125224909302480287, guid: d2e6bc5cb03da46e78da51df8797cebd, type: 2}

@@ -8,8 +8,8 @@ public class GameOverScreenHandler : MonoBehaviour
     public GameObject player;
     public GameObject gameOverMenu;
     public GameObject KnockbackOverlay;
-    public AudioSource audio;
-    
+    public AudioSource BGM;
+    public AudioSource JumpSound;
 
     public void Quit() {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
@@ -33,11 +33,13 @@ public class GameOverScreenHandler : MonoBehaviour
             Time.timeScale = 0f;
             gameOverMenu.SetActive(true);
             KnockbackOverlay.SetActive(false);
-            audio.Pause();
+            BGM.Pause();
+            JumpSound.mute = true;
 
         } else {
             Time.timeScale = 1f;
             gameOverMenu.SetActive(false);
+            JumpSound.mute = false;
         }
         
     }

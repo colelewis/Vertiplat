@@ -52,6 +52,7 @@ public class CharacterController : MonoBehaviour
     private bool WallStickDebounce;
     private bool CanDoubleJump = true;
     private bool hardMode;
+    public AudioSource jumpSound;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -84,7 +85,6 @@ public class CharacterController : MonoBehaviour
         NormalXScale = sprite.transform.localScale.x;
         playerSizeX = GetComponent<Collider2D>().bounds.size.x;
         playerSizeY = GetComponent<Collider2D>().bounds.size.y;
-
     }
 
     private void Awake()
@@ -120,6 +120,9 @@ public class CharacterController : MonoBehaviour
 
         if (VertInput == 1) //pressing up
         {
+            if (!jumpSound.isPlaying && JumpDebounce) {
+                jumpSound.PlayOneShot(jumpSound.clip, 1f);
+            }
             WallStickTimer = 0;
             //not being on the ground and not jumping clears the jump hold time, so reset it if its still within coyote time and the player tries to jump
             if(LastOnGround<=CoyoteTime && !Jumping && JumpDebounce) 

@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public GameManager GM;
     public GameObject ScoreText;
     public GameObject gameOverMenu;
 
@@ -15,6 +16,9 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         score = 0;
+        GM = FindObjectOfType<GameManager>();
+        gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
+        gameOverMenu.transform.Find("HighScoreText").GetComponent<TextMeshProUGUI>().text = "High Score: " + GM.HighScore.ToString();
     }
 
     // Update is called once per frame
@@ -26,6 +30,12 @@ public class ScoreManager : MonoBehaviour
             score = currScore;
             ScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
             gameOverMenu.transform.Find("FinalScoreText").GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
+            if(GM != null && score>GM.HighScore)
+            {
+                GM.HighScore = score;
+            }
+
+            gameOverMenu.transform.Find("HighScoreText").GetComponent<TextMeshProUGUI>().text = "High Score: " + GM.HighScore.ToString();
         }
     }
 }

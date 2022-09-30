@@ -99,6 +99,14 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void JumpSound()
+    {
+        if (!jumpSound.isPlaying)
+        {
+            jumpSound.PlayOneShot(jumpSound.clip, 1f);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -120,9 +128,6 @@ public class CharacterController : MonoBehaviour
 
         if (VertInput == 1) //pressing up
         {
-            if (!jumpSound.isPlaying && JumpDebounce) {
-                jumpSound.PlayOneShot(jumpSound.clip, 1f);
-            }
             WallStickTimer = 0;
             //not being on the ground and not jumping clears the jump hold time, so reset it if its still within coyote time and the player tries to jump
             if(LastOnGround<=CoyoteTime && !Jumping && JumpDebounce) 
@@ -135,6 +140,7 @@ public class CharacterController : MonoBehaviour
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x + playerSizeX/2, transform.position.y, -1f));
+                    JumpSound();
                 }
                 
                 
@@ -146,6 +152,7 @@ public class CharacterController : MonoBehaviour
                 {
                     JumpAway();
                     CreateDust(new Vector3(transform.position.x - playerSizeX/2, transform.position.y, -1f));
+                    JumpSound();
                 }
 
                 
@@ -160,6 +167,7 @@ public class CharacterController : MonoBehaviour
                     CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY/2, -1f));
                     OnGround = false;
                     JumpDebounce = false;
+                    JumpSound();
                 }
             }
             else
@@ -173,6 +181,7 @@ public class CharacterController : MonoBehaviour
                         rb.velocity = new Vector2(rb.velocity.x, 0f); //clear velocity for consistent jump
                         CreateDust(new Vector3(transform.position.x, transform.position.y - playerSizeY / 2, -1f));
                         CanDoubleJump = false;
+                        JumpSound();
                     }
                     LastJumpClock = 0; //track jump input
                     JumpDebounce = false;

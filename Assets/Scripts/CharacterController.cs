@@ -53,7 +53,7 @@ public class CharacterController : MonoBehaviour
     private bool CanDoubleJump = true;
     private bool hardMode;
     public AudioSource jumpSound;
-
+    public AudioSource FastFallSound;
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
     {
@@ -215,6 +215,7 @@ public class CharacterController : MonoBehaviour
             if(ShrinkTransition>ShrinkTransitionTime)
             {
                 ShrinkTransition = ShrinkTransitionTime; //cap it at max time
+                FastFallSound.PlayOneShot(FastFallSound.clip, 0.8f);
             }    
             if (NormalXScale>0)
                 sprite.transform.localScale = new Vector3(NormalXScale * 1 - (FallShrinkFactor*(ShrinkTransition/ShrinkTransitionTime)), sprite.transform.localScale.y, sprite.transform.localScale.z); //lerp size

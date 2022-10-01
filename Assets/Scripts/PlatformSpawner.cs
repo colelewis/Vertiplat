@@ -84,7 +84,7 @@ public class PlatformSpawner : MonoBehaviour
         {
             bool spawnCockroach = Random.Range(1, 100) <= 50;
             float waitTime = spawnWaitTime - (UnityEngine.Camera.main.GetComponent<Camera>().RiseSpeed / 2);
-            if (SpawnedPlatforms < 2)
+            if (SpawnedPlatforms < 3)
                 waitTime = 0f;
             Vector3 playerInCameraPosition = UnityEngine.Camera.main.WorldToViewportPoint(player.transform.position);
             Vector3 location = UnityEngine.Camera.main.WorldToViewportPoint(Vector3.zero);

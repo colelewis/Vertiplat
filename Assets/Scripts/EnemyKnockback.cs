@@ -89,7 +89,7 @@ public class EnemyKnockback : MonoBehaviour
             {
                 if(KnockbackVector.x < 0.4 && KnockbackVector.x >= 0 || KnockbackVector.x > -0.4 && KnockbackVector.x < 0)
                 {
-                    Debug.Log("roach boost");
+                    //roach boost
                     KnockbackVector = new Vector2(KnockbackVector.x, KnockbackVector.y * 0.8f);
                     StarMat.color = Color.green;
                     roachBoosted = true;
@@ -105,8 +105,6 @@ public class EnemyKnockback : MonoBehaviour
             CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
             CreateHitParticles(collision.contacts[Mathf.RoundToInt(collision.contacts.Length/2)].point);
             HitSound.Play();
-            Debug.Log(cc.GetComponent<Rigidbody2D>().velocity);
-            Debug.Log("fast falling: "+cc.FastFalling);
             KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 
         }

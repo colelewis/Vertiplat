@@ -15,6 +15,7 @@ public class CharacterController : MonoBehaviour
 
     public GameObject DustParticleSystem; //dust particle system
     public GameObject sprite; //player sprite
+    public GameObject FliesParticleSystem;
     public float MoveSpeed = 8f; //speed of player moving left and right
     public float JumpPower = 14f; //how high the player can jump
     public float JumpHoldTime = 0.2f; //how long the player can hold jump to continue to ascend upwards
@@ -30,8 +31,8 @@ public class CharacterController : MonoBehaviour
 
     public bool FastFalling = false; //public so it can be accessed in knockback script
 
-    private bool Jumping = false;
-    private bool OnGround;
+    [SerializeField] private bool Jumping = false; // Serialized so it can be seen in the inspector for debugging.
+    [SerializeField] private bool OnGround;
     private Rigidbody2D rb;
     private float HorInput;
     private float VertInput;
@@ -52,6 +53,9 @@ public class CharacterController : MonoBehaviour
     private bool WallStickDebounce;
     private bool CanDoubleJump = true;
     private bool hardMode;
+    private Animator animator;
+    private float cooldown_timer = 151;
+    private float fly_cooldown = 1000;
 
 
     void CreateDust(Vector3 location) //creates dust particles at players feet
@@ -84,7 +88,7 @@ public class CharacterController : MonoBehaviour
         NormalXScale = sprite.transform.localScale.x;
         playerSizeX = GetComponent<Collider2D>().bounds.size.x;
         playerSizeY = GetComponent<Collider2D>().bounds.size.y;
-
+        animator = GetComponent<Animator>();
     }
 
     private void Awake()
@@ -104,12 +108,19 @@ public class CharacterController : MonoBehaviour
     {
         // Face the direction you're moving by changing scale.
         if (HorInput > 0)   // Moving Right
+        {
             NormalXScale = Mathf.Abs(NormalXScale);
+            animator.SetBool("moving", true);
+        }
         else if (HorInput == 0f)  // Maintain State
-            /* Intentionally Empty */;
+        {
+            animator.SetBool("moving", false);
+        }
         else if (HorInput < 0 && NormalXScale > 0)  // Moving Left
+        {
             NormalXScale = NormalXScale * -1;
-        
+            animator.SetBool("moving", true);
+        }
         HorInput = Input.GetAxisRaw("Horizontal");
         VertInput = Input.GetAxisRaw("Vertical");
         var Jump = Input.GetAxisRaw("Jump");
@@ -117,8 +128,8 @@ public class CharacterController : MonoBehaviour
         {
             VertInput = 1;
         }
-
-        if (VertInput == 1) //pressing up
+        /* Pressing Up */
+        if (VertInput == 1)
         {
             WallStickTimer = 0;
             //not being on the ground and not jumping clears the jump hold time, so reset it if its still within coyote time and the player tries to jump
@@ -178,9 +189,10 @@ public class CharacterController : MonoBehaviour
                 Jumping = false; //stop going up if player is out of jump time
             }
         }
-        if (VertInput == 0) //not pressing up or down
+        /* END Pressing Up */
+        /* Neither Pressing Up or Down */
+        if (VertInput == 0)
         {
-  
             JumpDebounce = true; //stopped pressing jump so jump debounce is true
             Jumping = false; //stop going up
             if (CurrentJumpHoldTime > 0 && !OnGround) //if there was still time remaining in the jump then stop it
@@ -191,8 +203,8 @@ public class CharacterController : MonoBehaviour
             {
                 CurrentJumpHoldTime = JumpHoldTime;
             }
-
         }
+        /* Pressing Down */
         if (VertInput == -1 && rb.velocity.y < -2) //pressing down while falling
         {
             FastFalling = true; //start fast falling
@@ -260,6 +272,28 @@ public class CharacterController : MonoBehaviour
         {
             WallStickTimer -= Time.deltaTime;
         }
+        /*
+        // Idle fly particles
+        //cooldown_timer += Time.deltaTime;
+        if (rb.velocity.x == 0f && rb.velocity.y == 0f )//&& cooldown_timer >= fly_cooldown)
+        {
+            fly_cooldown = 0;
+            // IDK, there's prolly a way to do this in the particle system.
+            try
+            {
+                GameObject flies = Instantiate(FliesParticleSystem.gameObject, 
+                                               new Vector3(transform.position.x, transform.position.y + playerSizeY/2, -1f), 
+                                               Quaternion.identity);
+                ParticleSystem PS = flies.GetComponent<ParticleSystem>();
+                PS.Play();
+                Destroy(flies, PS.main.duration + 1f);
+            }
+            catch
+            {
+                Debug.Log("Flies reference missing");
+            }
+        }
+        */
 
     }
 
@@ -306,7 +340,6 @@ public class CharacterController : MonoBehaviour
 
     private void OnCollisionTouch(Collision2D collision) //for both collision enter and collision stay
     {
-
         Vector3 normal = collision.contacts[0].normal;
         float angle = Vector3.Angle(normal, Vector3.up);
         if(WallStickDebounce)
@@ -351,7 +384,6 @@ public class CharacterController : MonoBehaviour
                 
             }
         }
-
         sprite.transform.localScale = new Vector3(NormalXScale, sprite.transform.localScale.y, sprite.transform.localScale.z); //fix scale if player was fastfalling
         ShrinkTransition = 0f;
     }
@@ -359,7 +391,6 @@ public class CharacterController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         OnCollisionTouch(collision);
-
     }
 
     private void OnCollisionStay2D(Collision2D collision) //this is needed for a weird glitch where sometimes OnCollisionEnter doesnt fire

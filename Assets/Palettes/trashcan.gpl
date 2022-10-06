@@ -1,0 +1,9 @@
+GIMP Palette
+Name: trashcan
+Columns: 0
+#
+ 31  88  36	shadow
+ 51 145  59	base
+ 67  67  67	lid
+  0   0   0	wheel
+255 255 255	paint

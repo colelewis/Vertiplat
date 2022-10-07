@@ -11,6 +11,7 @@ public class EnemyKnockback : MonoBehaviour
     public GameObject KnockbackParticles;
     public GameObject HitParticles;
     public AudioSource HitSound;
+    public AudioSource OuchSound;
     public Material StarMat;
 
     private Rigidbody2D rb;
@@ -99,12 +100,16 @@ public class EnemyKnockback : MonoBehaviour
             {
                 cc.FastFalling = false;
                 rb.velocity = Vector2.zero;
+                HitSound.Play();
+            }
+            else
+            {
+                OuchSound.Play();
             }
             rb.AddForce(KnockbackVector * KnockbackMultiplier);
             FindObjectOfType<HitStop>().Pause(0.083f);
             CreateKnockbackParticles(Vector2.SignedAngle(Vector2.up, KnockbackVector), collision.gameObject.transform.position);
             CreateHitParticles(collision.contacts[Mathf.RoundToInt(collision.contacts.Length/2)].point);
-            HitSound.Play();
             KnockbackMultiplier *= KnockbackIncreaseMultiplier;
 
         }
